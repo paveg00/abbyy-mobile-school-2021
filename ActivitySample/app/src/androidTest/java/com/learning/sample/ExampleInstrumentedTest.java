@@ -1,4 +1,4 @@
-package com.github.ivanshafran.activitysample;
+package com.learning.sample;
 
 import android.content.Context;
 
@@ -23,6 +23,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.github.ivanshafran.activitysample", appContext.getPackageName());
+        assertEquals("com.learning.activitysample", appContext.getPackageName());
     }
 }

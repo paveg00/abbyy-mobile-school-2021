@@ -1,4 +1,4 @@
-package com.github.ivanshafran.activitysample;
+package com.learning.sample;
 
 import android.os.Bundle;
 import android.view.View;

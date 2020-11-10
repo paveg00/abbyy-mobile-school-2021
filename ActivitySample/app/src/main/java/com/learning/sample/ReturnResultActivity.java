@@ -1,10 +1,12 @@
-package com.github.ivanshafran.activitysample;
+package com.learning.sample;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+
+import com.learning.sample.R;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +20,7 @@ public class ReturnResultActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_return_result);
+        setContentView( R.layout.activity_return_result);
 
         resultEditText = findViewById(R.id.resultEditText);
         findViewById(R.id.resultButton).setOnClickListener(new View.OnClickListener() {

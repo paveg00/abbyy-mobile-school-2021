@@ -1,9 +1,11 @@
-package com.github.ivanshafran.activitysample;
+package com.learning.sample;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.TextView;
+
+import com.learning.sample.R;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +21,7 @@ public class SaveStateActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_save_state);
+        setContentView( R.layout.activity_save_state);
         counterTextView = findViewById(R.id.counterTextView);
         findViewById(R.id.increaseCounterButton).setOnClickListener(new View.OnClickListener() {
             @Override
