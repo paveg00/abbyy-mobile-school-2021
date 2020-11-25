@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="me.shafran.rvsample"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="me.shafran.rvsample">
 
     <application
         android:name=".App"
@@ -17,7 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PersonDetailActivity"></activity>
+        <activity android:name=".PersonDetailActivity" />
     </application>
 
 </manifest>

@@ -1,36 +1,20 @@
-package me.shafran.rvsample;
+package me.shafran.rvsample
 
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.TextView;
+import android.view.View
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 
-public class PersonViewHolder extends RecyclerView.ViewHolder {
+abstract class PersonViewHolder(itemView: View, listener: PersonAdapter.Listener?)
+	: RecyclerView.ViewHolder(itemView) {
+	protected val textView: TextView = itemView.findViewById(R.id.personNameTextView)
+	protected lateinit var data: Person
 
-	private TextView personNameTextView;
-	private long id;
-	private PersonAdapter.Listener listener;
-
-	public PersonViewHolder(
-		final View itemView,
-		final PersonAdapter.Listener listener
-	)
-	{
-		super( itemView );
-		personNameTextView = itemView.findViewById( R.id.personNameTextView );
-		personNameTextView.setOnClickListener( new View.OnClickListener() {
-			@Override
-			public void onClick( final View v )
-			{
-				if( listener != null ) {
-					listener.onPersonClick( id );
-				}
-			}
-		} );
+	init {
+		itemView.setOnClickListener {
+			listener?.onPersonClick(data.id)
+		}
 	}
 
-	public void bind( final Person person )
-	{
-		personNameTextView.setText( person.getName() );
-		id = person.getId();
-	}
+	abstract fun bind(person: Person)
+
 }

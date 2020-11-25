@@ -1,12 +1,10 @@
-package me.shafran.rvsample;
+package me.shafran.rvsample
 
-import android.app.Application;
+import android.app.Application
 
-public class App extends Application {
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        PersonRepository.initialize(this);
-    }
+class App : Application() {
+	override fun onCreate() {
+		super.onCreate()
+		PersonRepository.initialize(this)
+	}
 }

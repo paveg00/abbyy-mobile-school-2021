@@ -1,58 +1,43 @@
-package me.shafran.rvsample;
+package me.shafran.rvsample
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class PersonAdapter extends RecyclerView.Adapter<PersonViewHolder> {
-
-	public interface Listener {
-
-		void onPersonClick( long id );
-
+class PersonAdapter : RecyclerView.Adapter<PersonViewHolder>() {
+	companion object {
+		private const val LEFT_VIEW_HOLDER_TYPE = 0
+		private const val RIGHT_VIEW_HOLDER_TYPE = 1
 	}
 
-	private List<Person> personList = new ArrayList<>();
-	private Listener listener;
+	var personList: List<Person> = emptyList()
 
-	public void setListener( final Listener listener )
-	{
-		this.listener = listener;
+	var listener: Listener? = null
+
+	interface Listener {
+		fun onPersonClick(id: Long)
 	}
 
-	public void setPersonList( final List<Person> personList )
-	{
-		this.personList = personList;
-		notifyDataSetChanged();
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonViewHolder {
+		val inflater = parent.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+		val itemView = inflater.inflate(R.layout.person_list_item, parent, false)
+		return when(viewType) {
+			LEFT_VIEW_HOLDER_TYPE -> LeftPersonViewHolder(itemView, listener)
+			RIGHT_VIEW_HOLDER_TYPE -> RightPersonViewHolder(itemView, listener)
+			else -> throw IllegalStateException()
+		}
 	}
 
-	@NonNull
-	@Override
-	public PersonViewHolder onCreateViewHolder( @NonNull final ViewGroup parent, final int viewType )
-	{
-		LayoutInflater layoutInflater = LayoutInflater.from( parent.getContext() );
-		final View view = layoutInflater.inflate(
-			R.layout.person_list_item,
-			parent,
-			false
-		);
-		return new PersonViewHolder( view, listener );
+	override fun onBindViewHolder(holder: PersonViewHolder, position: Int) {
+		holder.bind(personList[position])
 	}
 
-	@Override
-	public void onBindViewHolder( @NonNull final PersonViewHolder holder, final int position )
-	{
-		holder.bind( personList.get( position ) );
+	override fun getItemCount(): Int {
+		return personList.size
 	}
 
-	@Override
-	public int getItemCount()
-	{
-		return personList.size();
+	override fun getItemViewType(position: Int): Int {
+		return position % 2
 	}
 }

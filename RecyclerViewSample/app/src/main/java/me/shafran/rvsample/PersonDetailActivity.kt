@@ -1,30 +1,29 @@
-package me.shafran.rvsample;
+package me.shafran.rvsample
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.os.NetworkOnMainThreadException
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 
-public class PersonDetailActivity extends AppCompatActivity {
+class PersonDetailActivity : AppCompatActivity() {
 
-    private static final String ID_KEY = "ID_KEY";
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setContentView(R.layout.activity_person_detail)
+		val id: Long = intent.getLongExtra(ID_KEY, -1)
+		val person = PersonRepository.getPersonById(id)
+		val textView: TextView = findViewById(R.id.personNameTextView)
+		textView.text = person.name
+	}
 
-    public static Intent getIntent(final Context context, final long id) {
-        final Intent intent = new Intent(context, PersonDetailActivity.class);
-        intent.putExtra(ID_KEY, id);
-        return intent;
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_person_detail);
-
-        final long id = getIntent().getLongExtra(ID_KEY, -1);
-        final Person person = PersonRepository.getPersonById(id);
-
-        final TextView textView = findViewById(R.id.personNameTextView);
-        textView.setText(person.getName());
-    }
+	companion object {
+		private const val ID_KEY = "ID_KEY"
+		fun getIntent(context: Context?, id: Long): Intent {
+			val intent = Intent(context, PersonDetailActivity::class.java)
+			intent.putExtra(ID_KEY, id)
+			return intent
+		}
+	}
 }

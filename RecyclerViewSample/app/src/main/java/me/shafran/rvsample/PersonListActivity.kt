@@ -1,31 +1,29 @@
-package me.shafran.rvsample;
+package me.shafran.rvsample
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
-public class PersonListActivity extends AppCompatActivity implements PersonAdapter.Listener {
+class PersonListActivity : AppCompatActivity(), PersonAdapter.Listener {
+	override fun onPersonClick(id: Long) {
+		startActivity(PersonDetailActivity.getIntent(this, id))
+	}
 
-    @Override
-    public void onPersonClick(final long id) {
-        startActivity(PersonDetailActivity.getIntent(this, id));
-    }
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setContentView(R.layout.activity_person_list)
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_person_list);
+		val recyclerView: RecyclerView = findViewById(R.id.personRecyclerView)
+		recyclerView.layoutManager = LinearLayoutManager(this)
+		recyclerView.setHasFixedSize(true)
+		recyclerView.recycledViewPool.setMaxRecycledViews(0, 5)
 
-        final RecyclerView recyclerView = findViewById(R.id.personRecyclerView);
+		val adapter = PersonAdapter()
+		recyclerView.adapter = adapter
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.getRecycledViewPool().setMaxRecycledViews(0, 5);
-
-        final PersonAdapter adapter = new PersonAdapter();
-        recyclerView.setAdapter(adapter);
-        adapter.setPersonList(PersonRepository.getPersonList());
-        adapter.setListener(this);
-    }
+		adapter.personList = PersonRepository.getPersonList()
+		adapter.listener = this
+	}
 }
