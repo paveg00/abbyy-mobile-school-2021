@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">PermissionSample</string>
+    <string name="camera_permission_rationale">The app needs access to camera</string>
+    <string name="storage_permission_rationale">The app needs access to storage</string>
+</resources>
