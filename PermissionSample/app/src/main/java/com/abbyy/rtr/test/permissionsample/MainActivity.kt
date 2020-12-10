@@ -9,11 +9,13 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import java.io.File
+import java.io.FileOutputStream
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -41,7 +43,13 @@ class MainActivity : AppCompatActivity() {
 		}
 
 		if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-
+			if (fileName != null) {
+				val sharedPicturesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+				val imageFile = File(sharedPicturesDir, fileName)
+				FileOutputStream(imageFile).use {
+					image.compress(Bitmap.CompressFormat.JPEG, 100, it)
+				}
+			}
 		} else if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
 			Toast.makeText(this, R.string.storage_permission_rationale, Toast.LENGTH_LONG).show()
 		} else {
