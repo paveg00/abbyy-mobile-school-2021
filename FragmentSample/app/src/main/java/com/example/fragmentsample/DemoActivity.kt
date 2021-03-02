@@ -4,16 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.fragmentsample.DetailFragment.Companion.newInstance
+import androidx.lifecycle.LifecycleObserver
 
-class DemoActivity : AppCompatActivity() {
+class DemoActivity : AppCompatActivity(), LifecycleObserver {
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_demo)
 		if (savedInstanceState == null) {
+			val listFragment = ListFragment.newInstance()
 			supportFragmentManager
 				.beginTransaction()
-				.replace(R.id.demoMainContainer, ListFragment.newInstance(), ListFragment.TAG)
+				.replace(R.id.demoMainContainer, listFragment, ListFragment.TAG)
 				.addToBackStack(null)
 				.commit()
 		}
@@ -26,7 +28,7 @@ class DemoActivity : AppCompatActivity() {
 		}
 		supportFragmentManager
 			.beginTransaction()
-			.replace(R.id.demoDetailContainer, newInstance(name), DetailFragment.TAG)
+			.replace(R.id.demoDetailContainer, DetailFragment.newInstance(name), DetailFragment.TAG)
 			.addToBackStack(null)
 			.commit()
 	}
