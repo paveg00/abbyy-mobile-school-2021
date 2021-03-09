@@ -18,7 +18,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 public class HandlerAndHandlerActivity extends AppCompatActivity {
 
-    private static class MainHadler extends Handler {
+    private static class MainHandler extends Handler {
 
         interface Listener {
             void onDone();

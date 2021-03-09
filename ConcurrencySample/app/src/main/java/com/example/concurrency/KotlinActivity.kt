@@ -17,7 +17,7 @@ class KotlinActivity : AppCompatActivity() {
         job = GlobalScope.launch(context = Dispatchers.Main) {
             progressBar.visibility = View.VISIBLE
             val solution = solve()
-            textView.text = "Answer = " + solution
+            textView.text = "Answer = $solution"
             progressBar.visibility = View.INVISIBLE
         }
     }
