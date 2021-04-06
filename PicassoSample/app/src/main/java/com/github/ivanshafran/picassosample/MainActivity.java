@@ -1,12 +1,9 @@
 package com.github.ivanshafran.picassosample;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.ImageView;
 
-import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
