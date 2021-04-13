@@ -8,32 +8,39 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/badCatButton"
+        android:id="@+id/badLoadButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Bad Cat" />
+        android:text="Bad Load" />
 
     <Button
-        android:id="@+id/catButton"
+        android:id="@+id/loadButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Cat" />
+        android:text="Load" />
 
     <Button
-        android:id="@+id/dogButton"
+        android:id="@+id/loadAsyncButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Dog" />
+        android:text="Load Async" />
 
     <Button
-        android:id="@+id/horseButton"
+        android:id="@+id/loadVolleyButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Horse" />
+        android:text="Load Volley" />
+
+    <Button
+        android:id="@+id/loadRetrofitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Load Retrofit" />
 
     <TextView
         android:id="@+id/textView"
