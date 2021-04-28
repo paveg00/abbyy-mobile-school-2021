@@ -8,7 +8,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
-import com.google.gson.annotations.SerializedName
+import io.reactivex.Observable
+import io.reactivex.rxkotlin.flatMapIterable
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONArray
@@ -17,6 +18,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import java.io.BufferedReader
@@ -103,15 +105,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 		// Get по умолчанию
 		val request: Request = Request.Builder().url(POSTS_URL + "posts/").build()
 		// Асинхронность из коробки
-		okHttpClient.newCall(request).enqueue(object : okhttp3.Callback {
-			override fun onFailure(call: okhttp3.Call, e: IOException) {}
+		val call = okHttpClient.newCall(request)
+		call.enqueue(object : okhttp3.Callback {
+			override fun onFailure(call: okhttp3.Call, e: IOException) {
+				showOnTextView("Fail")
+			}
 
 			@Throws(IOException::class)
 			override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
-				if(response.isSuccessful) {
+				if (response.isSuccessful) {
 					val jsonArray = JSONArray(response.body!!.string())
 					val title = getPostFromJson(jsonArray)
-					runOnUiThread { showOnTextView(title) }
+					runOnUiThread {
+						showOnTextView(title)
+					}
 				}
 			}
 		})
@@ -131,10 +138,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 		showOnTextView("")
 		val jsonRequest = JsonArrayRequest(com.android.volley.Request.Method.GET, POSTS_URL + "posts/",
 			null,
-			{
-				showOnTextView(getPostFromJson(it))
+			{ jsonArray ->
+				showOnTextView(getPostFromJson(jsonArray))
 			},
-			{
+			{ error ->
 				showOnTextView("Fail")
 			}
 		)
@@ -147,7 +154,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 			.baseUrl(POSTS_URL)
 			.build()
 		val api = retrofit.create(Api::class.java)
-		val call = api.posts
+		val call = api.getPosts()
 		showOnTextView("")
 		call.enqueue(object : Callback<List<Post>> {
 			override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
@@ -158,18 +165,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 				}
 			}
 
-			override fun onFailure(call: Call<List<Post>>, t: Throwable) {}
+			override fun onFailure(call: Call<List<Post>>, t: Throwable) {
+				showOnTextView("Fail")
+			}
 		})
 	}
 
 	internal class Post(
-		@SerializedName("title")
+		val id: Int,
 		val title: String
 	)
 
 	internal interface Api {
-		@get:GET("posts")
-		val posts: Call<List<Post>>
+		@GET("posts")
+		fun getPosts(): Call<List<Post>>
 	}
 
 	companion object {
